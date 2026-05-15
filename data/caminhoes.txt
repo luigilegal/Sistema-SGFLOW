@@ -1,0 +1,4 @@
+ABC1D23;Carlos Souza;Carga;São Paulo
+DEF4G56;Ana Lima;Descarga;Mogi das Cruzes
+GHI7J89;Marcos Pereira;Carga;Suzano
+JKL2M34;Fernanda Alves;Descarga;Guarulhos

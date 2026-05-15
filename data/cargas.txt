@@ -1,0 +1,4 @@
+PAL001;Eletrônicos;120.5
+PAL002;Alimentos;300.0
+PAL003;Peças Automotivas;210.7
+PAL004;Medicamentos;80.0
