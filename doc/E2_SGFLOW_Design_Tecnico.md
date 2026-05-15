@@ -2,7 +2,7 @@
 
 **Disciplina:** Estrutura de Dados  
 **Prazo:** 15/05  
-**Peso:** 25% da nota final
+**Peso:** 25% da nota final 
 
 ## Identificação do Grupo
 
