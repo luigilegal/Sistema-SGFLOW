@@ -1,54 +1,14 @@
-<<<<<<< HEAD
-# SGFLOW 
-
-Nossa méta,trazer melhor fluxo de transporte aos nossos clientes.
-
-=======
 # SGFLOW — Sistema de Gerenciamento de Fluxos Logísticos
 
 Nossa méta,trazer melhor fluxo de transporte aos nossos clientes.
 
 O SGFLOW simula um fluxo logístico com caminhões, cargas e rotas, aplicando **Fila FIFO**, **Pilha LIFO**, **Lista de Rotas**, **Bubble Sort**, **Insertion Sort** e métricas de performance.
 
->>>>>>> a9c0f52 (docs: atualiza documentação final do SGFLOW)
 ## Integrantes
 
 - LUIGI SANTOS CAIRES — RGM 45722285
 - MARCOS VINICIUS SANTANA SILVA — RGM 45638390
 
-<<<<<<< HEAD
-
-SGFLOW — Sistema de Gerenciamento de Fluxos Logísticos.
-
-
-O projeto demonstra **Fila**, **Pilha** e **algoritmos de ordenação manuais** em um cenário logístico.
-
-## O que o projeto faz
-
-- Controla caminhões no pátio usando **Fila FIFO**.
-- Controla cargas/paletes usando **Pilha LIFO**.
-- Ordena rotas por distância usando **Bubble Sort** e **Insertion Sort** implementados manualmente.
-- Lê dados de arquivos `.txt`.
-- Possui menu interativo no terminal.
-- Possui testes unitários com `unittest`, sem dependências externas.
-
-## Como executar
-
-Na pasta do projeto, rode:
-
-```
-python src/ui/main.py
-```
-
-Se o comando acima não funcionar, tente:
-
-```
-python3 src/ui/main.py
-```
-
-se mesmo assim n funcionar execute o arquivo "main.py"
-
-=======
 ## O que o projeto faz
 
 - Controla caminhões no pátio usando **Fila FIFO**.
@@ -67,6 +27,10 @@ se mesmo assim n funcionar execute o arquivo "main.py"
 
 ## Como executar
 
+acesse o link: https://sistema-sgflow.onrender.com
+
+ou
+
 Na pasta do projeto, execute:
 
 ```
@@ -80,15 +44,12 @@ Depois acesse no navegador:
 http://127.0.0.1:5000
 ```
 
->>>>>>> a9c0f52 (docs: atualiza documentação final do SGFLOW)
 ## Como executar os testes
 
 ```
 python -m unittest discover tests
 ```
 
-<<<<<<< HEAD
-=======
 ## Formato dos arquivos de importação
 
 O sistema aceita somente arquivos `.csv` e `.xlsx`.
@@ -108,7 +69,6 @@ DEF4G56,Ana Lima,Descarga,Mogi das Cruzes,18,Palete 01|Palete 02
 
 As cargas devem ser separadas por `|`.
 
->>>>>>> a9c0f52 (docs: atualiza documentação final do SGFLOW)
 ## Estrutura de diretórios
 
 ```
@@ -121,17 +81,6 @@ Sistema-SGFLOW/
 │   ├── service/
 │   │   └── sgflow_service.py
 │   └── ui/
-<<<<<<< HEAD
-│       └── main.py
-├── tests/
-│   ├── test_fila.py
-│   ├── test_pilha.py
-│   └── test_ordenacao.py
-├── data/
-│   ├── caminhoes.txt
-│   ├── cargas.txt
-│   └── rotas.txt
-=======
 │       ├── app.py
 │       ├── templates/
 │       │   ├── index.html
@@ -149,35 +98,12 @@ Sistema-SGFLOW/
 │   ├── index.html
 │   └── css/
 │       └── style.css
->>>>>>> a9c0f52 (docs: atualiza documentação final do SGFLOW)
 ├── doc/
 │   └── E2_SGFLOW_Design_Tecnico.md
 ├── README.md
 └── .gitignore
 ```
 
-<<<<<<< HEAD
-## Formatos dos arquivos TXT
-
-### data/caminhoes.txt
-
-```
-placa;motorista;operacao;destino
-```
-
-### data/cargas.txt
-
-```
-codigo;descricao;peso
-```
-
-### data/rotas.txt
-
-```
-origem;destino;distancia_km
-```
-
-=======
 ## Observações importantes
 
 - Caminhões de **Descarga** precisam ter cargas iniciais.
@@ -187,4 +113,3 @@ origem;destino;distancia_km
 - As notificações aparecem no rodapé, ao lado do nome SGFLOW.
 - O consumo de memória é medido com `tracemalloc`, compatível com Windows, Linux e macOS.
 - As métricas de performance ficam armazenadas durante a execução do sistema e podem ser limpas ou exportadas em `.txt`.
->>>>>>> a9c0f52 (docs: atualiza documentação final do SGFLOW)
