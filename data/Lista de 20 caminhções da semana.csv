@@ -1,0 +1,25 @@
+placa,motorista,operacao,destino,distancia,cargas
+ABC1D23,Carlos Souza,Carga,São Paulo,62,Notebook|Mouse
+DEF4G56,Ana Lima,Descarga,Mogi das Cruzes,18,Palete 01|Palete 02|Palete 03
+GHI7J89,Marcos Pereira,Carga,Suzano,22,Caixa A
+JKL2M34,Fernanda Alves,Descarga,Guarulhos,47,Medicamentos|Eletrônicos
+QUL3B89,Renato Dias,Descarga,Santos,31,Impressora|Ferramentas|Produtos de Limpeza
+OPR5G28,João Nascimento,Descarga,Poá,79,Ferramentas
+WTG2N68,Beatriz Souza,Carga,Santo André,82,Palete 01|Impressora
+VTX0O20,Aline Oliveira,Carga,Santos,64,Equipamentos|Ferramentas|Impressora
+PZG3B27,Maria Araújo,Carga,Arujá,173,Ferramentas|Documentos
+ALJ0M98,Gustavo Barbosa,Carga,São Paulo,119,Material Hospitalar
+QWC1L14,João Lopes,Carga,Poá,81,Monitor
+EQH6T77,Isabela Santos,Carga,Osasco,31,Caixa A|Equipamentos
+FCW6T35,Lucas Rocha,Descarga,Jundiaí,13,Notebook|Mouse
+LQD3F26,Isabela Ribeiro,Descarga,Osasco,130,Medicamentos|Palete 03|Documentos
+TCO3B30,Larissa Santos,Carga,Sorocaba,24,Caixa A|Alimentos
+YCK8X83,André Santos,Carga,Osasco,109,Caixa A|Ferramentas|Palete 03
+CJA9B54,Larissa Almeida,Descarga,São Paulo,142,Impressora|Material Hospitalar
+URC1G82,Eduardo Gomes,Carga,Barueri,75,Alimentos|Documentos|Produtos de Limpeza
+JKA2N89,Isabela Ferreira,Carga,Barueri,101,Eletrônicos|Alimentos|Palete 02
+USN9E60,Juliana Araújo,Carga,Sorocaba,27,Equipamentos|Produtos de Limpeza
+XXS1G07,André Gomes,Descarga,Itaquaquecetuba,34,Palete 03|Ferramentas
+RGL6V27,Felipe Araújo,Carga,Guarulhos,132,Produtos de Limpeza|Peças Automotivas|Caixa A
+EPS1A85,Lucas Lopes,Descarga,Osasco,101,Produtos de Limpeza
+JTU9P99,André Almeida,Descarga,Santos,56,Caixa A|Produtos de Limpeza|Ferramentas

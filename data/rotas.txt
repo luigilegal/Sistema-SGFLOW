@@ -1,5 +1,0 @@
-Mogi das Cruzes;São Paulo;62
-Mogi das Cruzes;Suzano;18
-Mogi das Cruzes;Guarulhos;47
-Mogi das Cruzes;Santos;110
-Mogi das Cruzes;Campinas;155
