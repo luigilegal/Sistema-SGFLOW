@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGFLOW - Performance</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="topbar">
+        <div class="brand">
+            <div class="logo">SG</div>
+            <div>
+                <h1>SGFLOW</h1>
+                <p>Performance</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero performance-hero">
+            <div>
+                <span class="tag">Telemetria</span>
+                <h2>Performance dos últimos processos</h2>
+                <p>
+                    Este painel mostra detalhes das operações executadas no sistema
+        
+                </p>
+                <a href="{{ url_for('index') }}" class="performance-button">Voltar ao SGFLOW</a>
+            </div>
+
+            <div class="hero-card">
+                <div class="truck">📊</div>
+                <strong>{{ resumo.total_operacoes }}</strong>
+                <span>operações registradas</span>
+            </div>
+        </section>
+
+        <section class="cards-performance">
+            <div class="metric-card">
+                <h3>Tempo médio</h3>
+                <strong>{{ resumo.tempo_medio }} ms</strong>
+                <p>Média das operações registradas.</p>
+            </div>
+
+            <div class="metric-card">
+                <h3>Fila atual</h3>
+                <strong>{{ resumo.fila }}</strong>
+                <p>Caminhões aguardando no pátio.</p>
+            </div>
+
+            <div class="metric-card">
+                <h3>Rotas liberadas</h3>
+                <strong>{{ resumo.rotas }}</strong>
+                <p>Caminhões aguardando liberação de partida.</p>
+            </div>
+
+            <div class="metric-card memory-card">
+                <h3>Média de memória</h3>
+                <strong>{{ resumo.memoria_media_mb }} MB</strong>
+                <p>Média do consumo registrado nas operações.</p>
+            </div>
+
+            <div class="metric-card">
+                <h3>Ordenação atual</h3>
+                <strong>
+                    {% if resumo.ordem_rotas == 'decrescente' %}
+                        Insertion Sort
+                    {% else %}
+                        Bubble Sort
+                    {% endif %}
+                </strong>
+                <p>Complexidade teórica: O(n²).</p>
+            </div>
+        </section>
+
+        <section class="panel">
+            <div class="panel-header">
+                <h2>Últimas operações</h2>
+                <span>Performance</span>
+            </div>
+
+            <div class="performance-table-area">
+                {% if metricas %}
+                    <table class="performance-table">
+                        <thead>
+                            <tr>
+                                <th>Operação</th>
+                                <th>Algoritmo/Estrutura</th>
+                                <th>Tempo</th>
+                                <th>Volume</th>
+                                <th>Memória</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for metrica in metricas %}
+                                <tr>
+                                    <td>{{ metrica.operacao }}</td>
+                                    <td>{{ metrica.algoritmo }}</td>
+                                    <td>{{ metrica.tempo_ms }} ms</td>
+                                    <td>{{ metrica.volume }}</td>
+                                    <td>{{ metrica.memoria_mb }} MB</td>
+                                    
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td>Total: {{ resumo.total_operacoes }}</td>
+                                <td>-</td>
+                                <td>{{ resumo.tempo_total }} ms</td>
+                                <td>{{ resumo.volume_total }}</td>
+                                <td>{{ resumo.memoria_total }} MB</td>
+                                
+                            </tr>
+                        </tfoot>
+                    </table>
+                {% else %}
+                    <p class="empty">Ainda não existem métricas registradas.</p>
+                {% endif %}
+            </div>
+
+            <div class="performance-actions">
+                <form action="{{ url_for('limpar_performance') }}" method="post">
+                    <button class="danger" type="submit">Limpar dados</button>
+                </form>
+
+                <a href="{{ url_for('baixar_performance') }}" class="performance-button">
+                    Salvar dados
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <strong>SGFLOW</strong>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="footer-messages">
+                    {% for category, message in messages %}
+                        <span class="footer-alert {{ category }}">{{ message }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+    </footer>
+</body>
+</html>

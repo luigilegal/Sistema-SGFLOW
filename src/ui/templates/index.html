@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGFLOW</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="topbar">
+        <div class="brand">
+            <div class="logo">SG</div>
+            <div>
+                <h1>SGFLOW</h1>
+                <p>Sistema de Gerenciamento de Fluxos Logísticos</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <div>
+                <span class="tag">Controle Operacional</span>
+                <h2>SGFLOW - Controle visual do fluxo</h2>
+                <p>Importe a base de dados desejada ou Cadastre o caminhão a fila do pátio.</p>
+
+                <form action="{{ url_for('importar') }}" method="post" enctype="multipart/form-data" class="upload-form keep-scroll">
+                    <input type="file" name="arquivo" accept=".csv,.xlsx" required>
+                    <button>Importar CSV/XLSX</button>
+                </form>
+            </div>
+
+            <div class="hero-card">
+                <div class="truck">🚚</div>
+                <strong>{{ fila|length }}</strong>
+                <span>Caminhões no pátio</span>
+            </div>
+        </section>
+
+        <section class="add-panel">
+            <h2>Cadastrar novo caminhão</h2>
+            <p class="description">
+                Para Descarga, preencha o campo Cargas com os itens que o caminhão está trazendo.
+                Separe por |
+            </p>
+
+            <form action="{{ url_for('adicionar_caminhao') }}" method="post" class="truck-form keep-scroll">
+                <input name="placa" placeholder="Placa" required>
+                <input name="motorista" placeholder="Motorista" required>
+                <select name="operacao">
+                    <option>Carga</option>
+                    <option>Descarga</option>
+                </select>
+                <input name="destino" placeholder="Destino / Cidade" required>
+                <input type="number" step="0.1" name="distancia" placeholder="KM" required>
+                <input name="cargas" placeholder="Cargas: Palete 1|Palete 2">
+                <button class="plus">+</button>
+            </form>
+        </section>
+
+        <section class="main-grid">
+            <div class="panel" id="fila">
+                <div class="panel-header">
+                    <h2>Fila de Caminhões</h2>
+                    <span>Pátio</span>
+                </div>
+
+                <p class="description">Clique no caminhão para visualizar a pilha de cargas</p>
+
+                <form action="{{ url_for('atender_proximo') }}" method="post" class="action-form keep-scroll">
+                    <button class="primary">Atender próximo da fila</button>
+                </form>
+
+                <div class="scroll-area">
+                    {% if fila %}
+                        {% for caminhao in fila %}
+                            <a class="truck-item keep-scroll-link" href="{{ url_for('index', selected_id=caminhao.id) }}">
+                                <strong>{{ loop.index }}º</strong>
+                                {{ caminhao.placa }} — {{ caminhao.motorista }} —
+                                {{ caminhao.destino }} - {{ caminhao.operacao }}
+                            </a>
+                        {% endfor %}
+                    {% else %}
+                        <p class="empty">Nenhum caminhão aguardando no Pátio</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="panel" id="pilha">
+                <div class="panel-header">
+                    <h2>Pilha de Cargas</h2>
+                    <span>Cargas</span>
+                </div>
+
+                {% if selecionado %}
+                    <div class="selected-box">
+                        <strong>{{ selecionado.placa }}</strong>
+                        <span>
+                            {{ selecionado.motorista }} — {{ selecionado.operacao }} —
+                            {{ selecionado.destino }} / {{ selecionado.distancia }} km
+                        </span>
+                        <small>Status: {{ selecionado.status }}</small>
+                    </div>
+
+                    {% if em_atendimento and selecionado.id == em_atendimento.id %}
+                        <div class="cargo-actions">
+                            {% if selecionado.operacao == 'Descarga' %}
+                                <form action="{{ url_for('descarregar') }}" method="post" class="keep-scroll">
+                                    <button class="danger">Descarga</button>
+                                </form>
+                            {% endif %}
+
+                            {% if selecionado.operacao == 'Carga' %}
+                                <form action="{{ url_for('adicionar_carga') }}" method="post" class="cargo-form keep-scroll">
+                                    <button class="secondary" type="button">Carga</button>
+                                    <input name="item" placeholder="Digite o item">
+                                    <button class="plus">+</button>
+                                </form>
+
+                                <form action="{{ url_for('finalizar_carga') }}" method="post" class="keep-scroll">
+                                    <button class="success">Finalizar carga e liberar</button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+
+                    <div class="scroll-area stack-area">
+                        {% set cargas = selecionado.pilha.topo_primeiro() %}
+
+                        {% if cargas %}
+                            {% for carga in cargas %}
+                                <div class="box {% if loop.first %}top{% endif %}">{{ carga }}</div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="empty">Pilha vazia</p>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <p class="empty">Selecione ou cadastre um caminhão</p>
+                {% endif %}
+            </div>
+        </section>
+
+        <section class="panel rotas" id="rotas">
+            <div class="panel-header">
+                <h2>Cheking final</h2>
+                <form action="{{ url_for('inverter_rota') }}" method="post" class="keep-scroll inline-form">
+                    <button class="primary order-blue-button" type="submit">Inverter Ordem</button>
+                </form>
+            </div>
+
+            <p class="order-description">
+                Ordem atual:
+                {% if ordem_rotas == 'decrescente' %}
+                    maior KM primeiro
+                {% else %}
+                    menor KM primeiro
+                {% endif %}
+            </p>
+
+            <form action="{{ url_for('liberar_rota') }}" method="post" class="action-form keep-scroll">
+                <button class="success">Liberar partida</button>
+            </form>
+
+            <div class="scroll-area route-area">
+                {% if rotas %}
+                    {% for caminhao in rotas %}
+                        <div class="route-item">
+                            <strong>{{ loop.index }}º</strong>
+                            {{ caminhao.placa }} — {{ caminhao.motorista }} —
+                            {{ caminhao.destino }} — {{ caminhao.distancia }} km
+                            <span>{{ caminhao.operacao }}</span>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="empty">Nenhum caminhão aguardando.</p>
+                {% endif %}
+            </div>
+        </section>
+
+        <div class="performance-shortcut">
+            <a href="{{ url_for('performance') }}" class="performance-button keep-scroll-link">
+                Performance
+            </a>
+        </div>
+    </main>
+
+    <footer>
+        <strong>SGFLOW</strong>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="footer-messages">
+                    {% for category, message in messages %}
+                        <span class="footer-alert {{ category }}">{{ message }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+    </footer>
+
+    <script>
+        const scrollKey = "sgflow-scroll-position";
+
+        function saveScrollPosition() {
+            sessionStorage.setItem(scrollKey, String(window.scrollY));
+        }
+
+        document.querySelectorAll("form.keep-scroll").forEach((form) => {
+            form.addEventListener("submit", saveScrollPosition);
+        });
+
+        document.querySelectorAll("a.keep-scroll-link").forEach((link) => {
+            link.addEventListener("click", saveScrollPosition);
+        });
+
+        window.addEventListener("load", () => {
+            const savedPosition = sessionStorage.getItem(scrollKey);
+
+            if (savedPosition !== null) {
+                window.scrollTo(0, Number(savedPosition));
+                sessionStorage.removeItem(scrollKey);
+            }
+        });
+    </script>
+</body>
+</html>
